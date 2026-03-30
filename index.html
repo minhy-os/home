@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhy OS | Official Site</title>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #0a0a0a; color: #fff; line-height: 1.6; overflow-x: hidden; }
+
+        /* --- 1. BOOT SCREEN --- */
+        #boot-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; display: flex; flex-direction: column; padding: 40px; z-index: 9999; font-family: 'Courier New', monospace; transition: opacity 0.8s ease-out; }
+        #terminal-log { font-size: 0.75rem; color: #ffffff; max-width: 800px; margin: 0 auto; flex-grow: 1; overflow: hidden; }
+        #progress-container { width: 100%; height: 4px; background-color: #222; border-radius: 2px; margin-top: 10px; overflow: hidden; }
+        #progress-bar { width: 0%; height: 100%; background-color: #00ff00; box-shadow: 0 0 10px #00ff00; transition: width 5s linear; }
+
+        /* --- 2. MAIN CONTENT STYLES --- */
+        #main-content { display: none; opacity: 0; }
+        #main-content.show { display: block; opacity: 1; transition: opacity 1s ease-in; }
+
+        nav { 
+            position: fixed; top: 0; width: 100%; padding: 15px 5%; 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: rgba(10,10,10,0.95); backdrop-filter: blur(15px); 
+            z-index: 100; border-bottom: 1px solid #222;
+        }
+        .nav-brand-img { height: 30px; width: auto; }
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { color: #888; text-decoration: none; font-size: 0.8rem; font-weight: 700; transition: 0.3s; text-transform: uppercase; }
+        .nav-links a:hover { color: #e74c3c; }
+
+        header { 
+            min-height: 100vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center; 
+            background: radial-gradient(circle at center, #1e272e 0%, #0a0a0a 100%); 
+            padding: 120px 20px 60px 20px; 
+        }
+
+        .hero-logo-img {
+            width: 150px; height: auto; margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(231, 76, 60, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-title { font-size: 3rem; font-weight: 900; margin-bottom: 5px; letter-spacing: -1px; }
+        .hero-tagline { font-size: 0.9rem; color: #e74c3c; font-weight: bold; letter-spacing: 5px; margin-bottom: 30px; }
+        
+        .btn { padding: 16px 45px; border-radius: 8px; text-decoration: none; font-weight: 800; transition: 0.3s; cursor: pointer; display: inline-block; letter-spacing: 1px; }
+        .btn-main { background: #e74c3c; color: #fff; border: none; }
+        .btn-main:hover { background: #ff5e4d; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3); }
+
+        .section { padding: 80px 8%; text-align: center; }
+        .section-title { font-size: 2rem; margin-bottom: 15px; text-transform: uppercase; }
+        .section-subtitle { color: #666; margin-bottom: 50px; font-size: 1rem; }
+
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card { background: #111; border-radius: 20px; border: 1px solid #222; overflow: hidden; transition: 0.4s; text-align: left; }
+        .feature-card:hover { border-color: #e74c3c; transform: translateY(-10px); }
+        
+        .feature-img-box { width: 100%; height: 180px; background: #1a1a1a; overflow: hidden; }
+        .feature-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.4s; }
+        .feature-card:hover .feature-img-box img { opacity: 1; transform: scale(1.05); }
+
+        .feature-info { padding: 30px; }
+        .feature-info h3 { color: #e74c3c; margin-bottom: 10px; font-size: 1.3rem; }
+        .feature-info p { color: #888; font-size: 0.9rem; }
+
+        @media (max-width: 600px) {
+            nav { flex-direction: column; gap: 15px; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-logo-img { width: 100px; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="boot-screen">
+        <div id="terminal-log"></div>
+        <div style="width: 300px; margin: 0 auto; text-align: center;">
+            <div id="progress-container"><div id="progress-bar"></div></div>
+            <p style="font-size: 10px; color: #444; margin-top: 8px;">MINHY_OS_REVENGE_BUILD_26.4</p>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <nav>
+            <img src="logo.png" alt="M" class="nav-brand-img" onerror="this.style.display='none'">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Design</a></li>
+                <li><a href="#specs">Specs</a></li>
+            </ul>
+        </nav>
+
+        <header id="home">
+            <img src="logo.png" alt="Minhy OS Logo" class="hero-logo-img">
+            <h1 class="hero-title">Minhy OS</h1>
+            <p class="hero-tagline">Mini Hybrid Operating System</p>
+            <p style="color: #666; max-width: 400px; margin-bottom: 40px; font-size: 0.95rem;">
+                Arsitektur Debian yang tangguh bertemu dengan fleksibilitas Windows. Minhy OS dirancang dengan custom compatibility layer yang memungkinkan eksekusi file .exe dan .msi secara efisien tanpa beban overhead sistem yang berat.
+            </p>
+
+            <p style="color: #666; max-width: 400px; margin-bottom: 40px; font-size: 0.95rem;">
+                Intinya, Anda dapat menjalankan aplikasi/program baik itu dari Linux <i>.deb</i> maupun Windows <i>.exe .msi</i> dengan penggunaan RAM dan CPU sistem minimum (cz this is linux coy!)
+            </p>
+            <a href="#" class="btn btn-main" onclick="alert('ISO masih dimasak, Cuk!');">GET THE ISO</a>
+        </header>
+
+        <section class="section" id="features" style="background: #080808;">
+            <h2 class="section-title">What's make this "beautiful"?</h2>
+            <p class="section-subtitle">Visualisasi antarmuka dan fitur unggulan Minhy OS</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-img-box">
+                        <img src="ram.jpg" alt="Visual 1" onerror="this.src='https://via.placeholder.com/400x200/1a1a1a/e74c3c?text=Visual+Plymouth+Minhy'">
+                    </div>
+                    <div class="feature-info">
+                        <h3>Lightweight, serius dah</h3>
+                        <p>Sistem operasi ini hanya menggunakan RAM <b>400 MB</b> pada kondisi idle dan hanya memakan penyimpanan sebesar <b>8 GB</b>. Oh ya, size ISO instalasinya juga hanya berukuran <b>2.8 GB</b>, mantep ga euyy??</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-img-box">
+                        <img src="xfce.jpg" alt="Visual 2" onerror="this.src='https://via.placeholder.com/400x200/1a1a1a/e74c3c?text=Visual+Desktop+XFCE'">
+                    </div>
+                    <div class="feature-info">
+                        <h3>X+ UI</h3>
+                        <p>Lingkungan Desktop XFCE yang sudah dimodifikasi agar terlihat modern, bersih, namun tetap sangat ringan. Dengan <i>Easy Dock</i> yang memusatkan daftar aplikasi, recent apps, kontrol sistem, dan notifikasi dalam satu baris Taskbar melayang.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-img-box">
+                        <img src="icons.jpg" alt="Visual 3" onerror="this.src='https://via.placeholder.com/400x200/1a1a1a/e74c3c?text=Visual+Icon+Pack'">
+                    </div>
+                    <div class="feature-info">
+                        <h3>Exclusive Icon Pack</h3>
+                        <p>Setiap ikon aplikasi didesain ulang untuk menciptakan harmoni visual yang memanjakan mata.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section" id="specs" style="background: #0a0a0a; border-top: 1px solid #111;">
+            <h2 class="section-title">Hardware Requirements</h2>
+            <p class="section-subtitle">Minhy OS dirancang agar tetap responsif di berbagai kelas hardware.</p>
+
+            <div style="max-width: 800px; margin: 0 auto 60px auto;">
+                <h3 style="color: #e74c3c; margin-bottom: 20px; text-transform: uppercase; font-size: 1rem; letter-spacing: 2px;">Minhy OS Official Specs</h3>
+                <table style="width: 100%; border-collapse: collapse; text-align: left; background: #111; border-radius: 12px; overflow: hidden; border: 1px solid #222;">
+                    <thead>
+                        <tr style="background: #222; color: #fff;">
+                            <th style="padding: 15px;">Component</th>
+                            <th style="padding: 15px;">Minimum Spec</th>
+                            <th style="padding: 15px;">Recommended Spec</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #1a1a1a;">
+                            <td style="padding: 15px; font-weight: bold; color: #e74c3c;">Processor</td>
+                            <td style="padding: 15px;">1.0 GHz Dual Core</td>
+                            <td style="padding: 15px;">2.0 GHz Quad Core+</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #1a1a1a;">
+                            <td style="padding: 15px; font-weight: bold; color: #e74c3c;">RAM</td>
+                            <td style="padding: 15px;">1024 MB </td>
+                            <td style="padding: 15px;">4 GB </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #1a1a1a;">
+                            <td style="padding: 15px; font-weight: bold; color: #e74c3c;">Storage</td>
+                            <td style="padding: 15px;">10 GB HDD/SSD</td>
+                            <td style="padding: 15px;">32 GB SSD</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; font-weight: bold; color: #e74c3c;">Graphics</td>
+                            <td style="padding: 15px;">VGA 800x600</td>
+                            <td style="padding: 15px;">Intel HD / AMD Vega</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h3 style="color: #e74c3c; margin-bottom: 20px; text-transform: uppercase; font-size: 1rem; letter-spacing: 2px;">Dibanding Dengan OS Lain</h3>
+                <div style="overflow-x: auto; border-radius: 12px; border: 1px solid #222;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; background: #111; min-width: 600px;">
+                        <thead>
+                            <tr style="background: #e74c3c; color: #fff;">
+                                <th style="padding: 15px;">Efficiency Test</th>
+                                <th style="padding: 15px;">Minhy OS</th>
+                                <th style="padding: 15px; opacity: 0.7;">Ubuntu Standard</th>
+                                <th style="padding: 15px; opacity: 0.7;">Windows 11</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #222;">
+                                <td style="padding: 15px; font-weight: bold; color: #e74c3c;">Idle RAM</td>
+                                <td style="padding: 15px; color: #00ff00; font-weight: bold;">~500 MB</td>
+                                <td style="padding: 15px; color: #888;">~1.2 GB</td>
+                                <td style="padding: 15px; color: #888;">~2.5 GB+</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #222;">
+                                <td style="padding: 15px; font-weight: bold; color: #e74c3c;">Install Size</td>
+                                <td style="padding: 15px; color: #00ff00; font-weight: bold;">~8 GB</td>
+                                <td style="padding: 15px; color: #888;">~15 GB</td>
+                                <td style="padding: 15px; color: #888;">~30 GB</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 15px; font-weight: bold; color: #e74c3c;">Booting Speed</td>
+                                <td style="padding: 15px; color: #00ff00; font-weight: bold;">Fast</td>
+                                <td style="padding: 15px; color: #888;">Moderate</td>
+                                <td style="padding: 15px; color: #888;">Slow on HDD</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <p style="margin-top: 30px; color: #555; font-size: 0.8rem; letter-spacing: 1px;">
+                *Hasil dapat bervariasi tergantung pada
+ jenis penyimpanan (HDD/SSD) dan spek PC Anda. Data 
+Size instalasi akhir diambil per tanggal 28/03/26,
+ silahkan cek data lain pada internet untuk informasi tambahan.
+FYI, booting speed pada Minhy OS memerlukan waktu 30 detik pada HDD, 
+Ubuntu 90 detik (1.5 menit), dan Windows 11 sekitar 3 menit.
+            </p>
+        </section>
+
+
+        <footer style="padding: 40px; text-align: center; border-top: 1px solid #222; font-size: 0.7rem; color: #444; letter-spacing: 2px;">
+            MINHY OS PROJECT &copy; 2026 | HYBRID SYSTEM FOR EVERYONE
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const logContainer = document.getElementById('terminal-log');
+            const progressBar = document.getElementById('progress-bar');
+            const bootScreen = document.getElementById('boot-screen');
+            const mainContent = document.getElementById('main-content');
+
+            const bootCommands = [
+                "KERNEL_INIT: version 2.96 booting",
+                "Checking root file system... /dev/sdb1: clean",
+                "Mounting local filesystems... [ OK ]",
+                "Activating swap... [ OK ]",
+                "Setting up networking... eth0 up",
+                "Starting System Message Bus: dbus",
+                "Starting NET mDNS/DNS-SD Daemon: net-daemon",
+                "Checking for hardware changes...",
+                "Configuring network interfaces... [ OK ]",
+                "Mounting /proc and /sys filesystem...",
+                "Initial RAM disk loaded successfully",
+                "Running /scripts/init-premount...",
+                "Probing for PCI devices...",
+                "Applying CPU Microcode updates... [ DONE ]",
+                "Starting Kernel Logging Daemon: klogd",
+                "Initializing Entropy Harvesting... [ OK ]",
+                "Setting up console font and keymap...",
+                "Starting Minhy_OS Services Engine...",
+                "Optimizing XFCE Desktop Environment...",
+                "Loading Custom Plymouth Theme: MinhyBoot_26.4",
+                "User Authentication Service... READY",
+                "Starting Display Manager... LightDM",
+                "Minhy OS Boot Sequence Completed, waiting for hybrid service..."
+            ];
+
+            setTimeout(() => { progressBar.style.width = '100%'; }, 50);
+
+            let i = 0;
+            function printLog() {
+                if (i < bootCommands.length) {
+                    const line = document.createElement('div');
+                    line.innerHTML = `<span style="color:#555">[</span> <span style="color:#00ff00;font-weight:bold">OK</span> <span style="color:#555">]</span> ${bootCommands[i]}`;
+                    logContainer.appendChild(line);
+                    i++;
+                    setTimeout(printLog, Math.random() * 200 + 50); 
+                }
+            }
+            printLog();
+
+            setTimeout(function() {
+                bootScreen.style.opacity = '0';
+                setTimeout(function() {
+                    bootScreen.style.display = 'none';
+                    mainContent.classList.add('show');
+                }, 800);
+            }, 5500);
+        });
+    </script>
+</body>
+</html>
